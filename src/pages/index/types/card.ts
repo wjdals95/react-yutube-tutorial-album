@@ -29,7 +29,7 @@ interface Link {
    self: string
 }
 
-interface Tag {
+export interface Tag {
    source: {
       ancestry: any
       cover_photo: any

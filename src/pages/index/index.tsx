@@ -1,46 +1,26 @@
-import { useEffect, useState } from 'react'
+import { useState } from 'react'
+import { useRecoilValue } from 'recoil'
+import { imageData } from '@/recoil/selectors/imageSelector'
+
 import CommonHeader from '@components/common/header/CommonHeader'
 import CommonSearchBar from '@components/common/searchBar/CommonSearchBar'
 import CommonNav from '@/components/common/navigation/CommonNav'
 import CommonFooter from '@/components/common/footer/CommonFooter'
 import Card from './components/Card'
-import axios from 'axios'
+import DetailDialog from '@/components/common/dialog/DetailDialog'
+
 import { CardDTO } from './types/card'
 // CSS
 import styles from './styles/index.module.scss'
 
 function index() {
-   const [imgUrls, setImgUrls] = useState([])
+   const imgSelector = useRecoilValue(imageData)
+   const [imgData, setImgData] = useState<CardDTO>()
+   const [open, setOpen] = useState<boolean>(false) // 이미지 상세 다이얼로그 발생(관리) state
 
-   const getData = async () => {
-      // 오픈 API 활용
-      const API_URL = 'https://api.unsplash.com/search/photos'
-      const API_KEY = 'LNAxrttcvbCjCvqQelLN7v1XIjx2zBWC6L98N60orho'
-      const PER_PAGE = 30
-      const searchValue = 'Korea'
-      const pageValue = 100
-
-      try {
-         const res = await axios.get(
-            `${API_URL}?query=${searchValue}&client_id=${API_KEY}&page=${pageValue}&per_page=${PER_PAGE}`,
-         )
-         console.log(res)
-         // res.data.reulsts라는 배열을 활용할 예정
-         if (res.status === 200) {
-            setImgUrls(res.data.results)
-         }
-      } catch (error) {
-         console.log(error)
-      }
-   }
-
-   const cardList = imgUrls.map((card: CardDTO) => {
-      return <Card data={card} key={card.id} />
+   const CARD_LIST = imgSelector.data.results.map((card: CardDTO) => {
+      return <Card data={card} key={card.id} handleDialog={setOpen} handleSetData={setImgData} />
    })
-
-   useEffect(() => {
-      getData()
-   }, [])
 
    return (
       <div className={styles.page}>
@@ -60,10 +40,11 @@ function index() {
                   <CommonSearchBar />
                </div>
             </div>
-            <div className={styles.page__contents__imageBox}>{cardList}</div>
+            <div className={styles.page__contents__imageBox}>{CARD_LIST}</div>
          </div>
          {/* {공통 푸터 UI 부분} */}
          <CommonFooter />
+         {open && <DetailDialog data={imgData} handleDialog={setOpen} />}
       </div>
    )
 }
