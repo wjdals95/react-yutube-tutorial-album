@@ -27,8 +27,10 @@ function CommonSearchBar() {
          if (text === '') {
             // input 태그 안에 빈 값으로 검색했을 때 => searching default value
             setSearch('Korea')
+            setPage(1)
          } else {
             setSearch(text) // 작성한 Input Value 값 할당
+            setPage(1)
          }
       }
    }
