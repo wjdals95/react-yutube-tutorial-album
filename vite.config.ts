@@ -5,6 +5,7 @@ import { fileURLToPath, URL } from 'url'
 // https://vitejs.dev/config/
 export default defineConfig({
    plugins: [react()],
+   base: '/react-yutube-tutorial-album/',
    resolve: {
       alias: {
          '@': fileURLToPath(new URL('./src', import.meta.url)),
@@ -16,7 +17,6 @@ export default defineConfig({
          '@apis': fileURLToPath(new URL('./src/apis', import.meta.url)),
       },
    },
-   base: '/react-yutube-tutorial-album/',
    // SCSS 전역 사용
    css: {
       preprocessorOptions: {
