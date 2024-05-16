@@ -8,7 +8,7 @@ function App() {
       <RecoilRoot>
          <BrowserRouter>
             <Routes>
-               <Route index path="/" element={<MainPage />}></Route>
+               <Route index path="react-yutube-tutorial-album/" element={<MainPage />}></Route>
                <Route path="/search/:id" element={<MainPage />}></Route>
                <Route path="/bookmark" element={<BookmarkPage />}></Route>
             </Routes>
