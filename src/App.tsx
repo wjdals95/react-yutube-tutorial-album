@@ -6,7 +6,7 @@ import BookmarkPage from '@pages/bookmark/index'
 function App() {
    return (
       <RecoilRoot>
-         <BrowserRouter>
+         <BrowserRouter basename={process.env.PUBLIC_URL}>
             <Routes>
                <Route index path="/" element={<MainPage />}></Route>
                <Route path="/search/:id" element={<MainPage />}></Route>
